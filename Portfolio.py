@@ -16,6 +16,7 @@ class Portfolio():
         self.__losers = []
         self.__highestInvested = []
         self.__totalProfit = 0
+        self.__totalSecuredProfit = 0
         self.__totalInvested = 0
         self.setStocks(tradeList)
         self.setTotalProfit()
@@ -33,6 +34,8 @@ class Portfolio():
         return self.__holdingsDict
     def getTotalProfit(self):
         return self.__totalProfit
+    def getTotalSecuredProfit(self):
+        return self.__totalSecuredProfit
     def getTradeList(self):
         return self.__tradeList
     def getGainers(self):
@@ -49,11 +52,14 @@ class Portfolio():
     def setTotalProfit(self):  # Sets totalProfit and totalInvested
         tp = 0  # Total Profit
         ti = 0  # Total Invested
+        tsp = 0 # Total Secured Profit (Actually Traded)
         for key,value in self.__stocks.items():
             tp += value.getProfit()
             ti += value.getInvested()
+            tsp += value.getSecuredProfit()
         self.__totalProfit = tp
         self.__totalInvested = ti
+        self.__totalSecuredProfit = tsp
         
     def setStockTotalProfit(self):
         tp = self.__totalProfit

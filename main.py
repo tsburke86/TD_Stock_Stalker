@@ -4,37 +4,55 @@ from Portfolio import *
 from Trade import *
 
 
+def main():
+    import os
+    # Set trade files and make the portfolio
+    setTotalTrades()
+    holdings = os.path.abspath('holdings.csv')
+    transactions = os.path.abspath('total.csv')
+    h = makeHoldingDict(holdings)
+    t = makeTradeList(transactions)
+    port = Portfolio(t, h)
+    
+    while True:
+        print()
+        print("\t########################")
+        print("\t## TD ALL TRADES MENU ##")
+        print("\t########################")
+        print(" --------------------------------")
+        print("| 1\t| Print All Stocks Info  |")
+        print("| 2\t| Print Top 5 Gainers    |")
+        print("| 3\t| Print Top 5 Losers     |")
+        print("| 4\t| Print Top 6 Invested   |")
+        print("| q\t| Quit                   |")
+        print(" --------------------------------")
+        # Basic Stats
+        printStats(port)
+        print()
+        entry = input("Enter the option from above: ")
+        lineBreak()
+        if entry.upper() == 'Q': break
+        elif entry == '1': printAllTrades(port)
+        elif entry == '2': printGainers(port)
+        elif entry == '3': printLosers(port)
+        elif entry == '4': printInvested(port)
+        else: print("Bad Entry")
+        lineBreak()
+    print()
+    print("Until Next Time...")
+    print()
+        
 
-holdings = 'C:/Users/Tim/PycharmProjects/pythonProject/holdings.csv'
-transactions = 'C:/Users/Tim/PycharmProjects/pythonProject/total.csv'
 
-h = makeHoldingDict(holdings)
-t = makeTradeList(transactions)
-port = Portfolio(t, h)
+main()
+#printGainers(port)
+#printStats(port)
 #port.getStock('AAPL').printTrades()
 #port.printStocks()
 #port.getStock('MRVL').getProfit()
 #print(port.getStock('MRVL'))
 #for i in port.getTradeList(): print(i)
-print("\n## ALL TRADES ##\n");
-for i in range(len(port.getGainers())): print(port.getGainers()[i])
-print("#########\n")
-print("\n## GAINERS ##\n");
-for i in range(4): print(port.getGainers()[i])
-print("#########\n")
-print("\n## LOSERS ##\n");
-               
-for i in range(4):
-    try: print(port.getLosers()[i])
-    except IndexError: break
-print("#########\n")
-print("\n## MOST INVESTED ##\n");
-for i in range(6):
-    try: print(port.getInvested()[i])
-    except IndexError: break
-print("#########\n")
-print("Total Profit: ${:.2f}".format(port.getTotalProfit()))
-print("Total Invested: ${:.2f}".format(port.getTotalInvested()))
+
 #print(one[0].getTicker())
 #print(one[0].getEquity())
 '''

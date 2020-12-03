@@ -25,7 +25,6 @@ class Stock():
         
     def __str__(self):
         return self.__ticker+"\tShares Held: {:.0f}".format(self.__shares)\
-                +"  \t% Chg: {:.2f}".format(self.__percentChg)+'%'\
                +"\n\tPosition: ${:.2f}".format(self.__AVC)\
                 +"  \tCurrent: ${:.2f}".format(self.__mark)\
                +"\n\tInvested: ${:.2f}".format(self.__AVC * self.__shares)\
@@ -45,6 +44,8 @@ class Stock():
         return self.__tradeList
     def getProfit(self):
         return self.__profit
+    def getSecuredProfit(self):
+        return self.__securedProfit
     def getTotalProfit(self):
         return self.__totalProfit
     def getProfitPercent(self):
