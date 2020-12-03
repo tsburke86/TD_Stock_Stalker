@@ -10,12 +10,12 @@ class Stock():
     def __init__(self, ticker, hDict):
         self.__tradeList = []       # All trades
         self.__ticker = ticker
-        self.__profit = 0
+        self.__profit = 0           # Profit from held shares and trades
         self.__shares = 0
         self.__holding = 0
-        self.__AVC = 0
-        self.__mark = 0
-        self.__totalProfit = 0
+        self.__AVC = 0              # Current position
+        self.__mark = 0             # Current trading price                
+        self.__totalProfit = 0      # Total Profit from the porifolio
         self.__profitPercent = 0
         self.__investedPercent = 0
         self.__percentChg = 0
@@ -24,15 +24,24 @@ class Stock():
         self.setHolding(hDict)
         
     def __str__(self):
-        return self.__ticker+"\tShares Held: {:.0f}".format(self.__shares)\
+        long = " "+self.__ticker+"\tDate Range: "+self.getDates()\
+               +"\n\tShares Held: {:.0f}".format(self.__shares)\
+               +"  \t% Gain: {:.2f}".format(self.getCurrentPercent())+"%"\
                +"\n\tPosition: ${:.2f}".format(self.__AVC)\
-                +"  \tCurrent: ${:.2f}".format(self.__mark)\
+               +"  \tCurrent: ${:.2f}".format(self.__mark)\
                +"\n\tInvested: ${:.2f}".format(self.__AVC * self.__shares)\
                +"  \tImpact: "+self.getInvestedPercent()+"%"\
                +"\n\tTotal $$$: ${:.2f}".format(self.__profit)\
                +"  \tImpact: "+self.getProfitPercent()+"%"\
                +"\n\t$$$ Secured: ${:.2f}".format(self.__securedProfit)\
-               +"\t$$$ from Shares: ${:.2f}".format(self.__heldProfit)+'\n'
+               +"\t$$$ from Shares: ${:.2f}".format(self.__heldProfit)
+        
+        short = " "+self.__ticker+"\tDate Range: "+self.getDates()\
+                +"\n\t$$$ Secured: ${:.2f}".format(self.__securedProfit)\
+                +"  \tImpact: "+self.getProfitPercent()+"%"
+                
+        if self.__mark == 0: return short
+        else: return long
 
     def getTicker(self):
         return self.__ticker
@@ -56,6 +65,16 @@ class Stock():
         return self.__holding
     def getAVC(self):
         return self.__AVC
+    def getCurrentPercent(self):
+        if self.__mark != 0:
+            return (self.__mark - self.__AVC) / self.__AVC * 100
+        else: return 0
+        
+    def getDates(self):
+        start = self.__tradeList[0].getDate()
+        if self.__AVC == 0: last = self.__tradeList[-1].getDate()
+        else: last = "present"
+        return start+" - "+last
 
     # Setters
 
