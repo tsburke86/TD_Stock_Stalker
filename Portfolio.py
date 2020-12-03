@@ -26,8 +26,8 @@ class Portfolio():
         self.setInvested()
 
     # Getters
-    def getStock(self, entry):
-        return self.__stocks[entry]
+    def getStock(self, ticker):
+        return self.__stocks[ticker]
     def getStocks(self):
         return self.__stocks
     def getHoldings(self):

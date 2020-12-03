@@ -16,24 +16,27 @@ def main():
     
     while True:
         print()
-        print("\t########################")
-        print("\t## TD ALL TRADES MENU ##")
-        print("\t########################")
-        print()
         # Basic Stats
         printStats(port)
+        printTickers(port)
         print()
-        print(" --------------------------------")
+        print("     ########################")
+        print("     ## TD ALL TRADES MENU ##")
+        print("     ########################")
+        print("/--------------------------------\\")
         print("| 1\t| Print All Stocks Info  |")
         print("| 2\t| Print Top 5 Gainers    |")
         print("| 3\t| Print Top 5 Losers     |")
         print("| 4\t| Print Top 6 Invested   |")
         print("| q\t| Quit                   |")
-        print(" --------------------------------")
+        print("| Enter the ticker for trades    |")
+        print("\\--------------------------------/")
         print()
         entry = input("Enter the option from above: ")
         lineBreak()
-        if entry.upper() == 'Q': break
+        if entry == 'q': break
+        elif entry.upper() in port.getStocks():
+            printTrades(port, entry.upper())
         elif entry == '1': printAllTrades(port)
         elif entry == '2': printGainers(port)
         elif entry == '3': printLosers(port)

@@ -1,3 +1,5 @@
+from Func import *
+
 '''
 The Stock Object is a list containing all the trade objects for that ticker.
 It takes in the holdings as a dictionary (hDict) and quereys the stocks ticker
@@ -127,6 +129,7 @@ class Stock():
     def printTrades(self):
         for i in self.__tradeList:
             print(i)
+            shortBreak()
 
     def callTrade(self, i):
         return self.__tradeList[i]

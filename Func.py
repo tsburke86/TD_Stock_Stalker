@@ -1,5 +1,5 @@
 from Trade import *
-### Functions for printing ###
+### Functions for printing with portfolios ###
 def printAllTrades(port):
     print("\t################")
     print("\t## ALL STOCKS ##")
@@ -96,6 +96,29 @@ def makeHoldingDict(file):
     return holdingDict
 
 ##################
+
+# Print all trades for a stock
+def printTrades(port, ticker):
+        print()
+        print(port.getStock(ticker))
+        print()
+        print("## TRADES ##")
+        print()
+        port.getStock(ticker).printTrades()
+        print()
+        null = input("PRESS ENTER TO CONTINUE")
+
+# Print tickers of held shares
+def printTickers(port, width=5):
+    print()
+    print("  TICKERS TRADED")
+    counter = 1
+    for key,value in port.getStocks().items():
+        print(value.getTicker(),end='\t')
+        counter += 1
+        if counter > width:
+            counter = 1
+            print()
 
 
 
