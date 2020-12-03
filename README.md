@@ -1,5 +1,5 @@
 # TD_Stock_Stalker
-See the profit from all trades (including current holdings) on a TD Ameritrade acount
+See the profit from all trades (including current holdings) on a TD Ameritrade account
 
 
 # Special info
