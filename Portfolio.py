@@ -1,4 +1,4 @@
-from Stock import *
+from Stock_Block import *
 
 # Function to sort the profit list
 def getProfit(stock):
@@ -107,6 +107,7 @@ class Portfolio():
 
         for key,value in self.__stocks.items():
             value.setProfit()
+            value.setBlocks()
 
     # Misc
     def printStocks(self):

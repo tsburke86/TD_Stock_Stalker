@@ -20,9 +20,9 @@ def main():
         printStats(port)
         printTickers(port)
         print()
-        print("     ########################")
-        print("     ## TD ALL TRADES MENU ##")
-        print("     ########################")
+        print("    ###########################")
+        print("    ## TD STOCK STALKER MENU ##")
+        print("    ###########################")
         print("/--------------------------------\\")
         print("| 1\t| Print All Stocks Info  |")
         print("| 2\t| Print Top 5 Gainers    |")
@@ -36,7 +36,9 @@ def main():
         lineBreak()
         if entry == 'q': break
         elif entry.upper() in port.getStocks():
-            printTrades(port, entry.upper())
+            printBlocks(port, entry.upper())
+            print("Stock Info:")
+            print(port.getStock(entry.upper()))
         elif entry == '1': printAllTrades(port)
         elif entry == '2': printGainers(port)
         elif entry == '3': printLosers(port)

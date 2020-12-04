@@ -28,12 +28,17 @@ class Trade():
         self.__total = i[7]
         # variable attributes
         self.setType()
+
+        # Set by the block, its how your account looked at the trade
+        self.__holding = 0
         self.__averageCost = 0
+        self.__heldShares = 0
         self.__profit = 0
 
     def __str__(self):
         return self.__date + " " + self.__description+\
-    " for a total of: $"+self.__total
+              " for: $"+str(abs(eval(self.__total)))
+
     # Getters
     def getTicker(self):
         return self.__ticker
@@ -56,14 +61,26 @@ class Trade():
     def getTotal(self):
         return eval(self.__total)
 
-    def getAverageCost(self):
+    def getHeldShares(self):
+        return self.__heldShares
+    
+    def getHolding(self):
+        return self.__holding
+
+    def getAVC(self):
         return self.__averageCost
 
     def getProfit(self):
         return self.__profit
 
     # Setters
-    def setAverageCost(self, cost):
+    def setHeldShares(self, shares):
+        self.__heldShares = shares
+        
+    def setHolding(self, holding):
+        self.__holding = holding
+        
+    def setAVC(self, cost):
         self.__averageCost = cost
 
     def setProfit(self, profit):
@@ -82,6 +99,21 @@ class Trade():
 
     def reduceQuantity(self):
         self.__quantity -= 1
+        
+    def printTrade(self):
+        buy = self.__date + " " + self.__description+\
+              " for: $"+str(abs(eval(self.__total)))+\
+              "\n    Holding: ${:.2f}".format(self.__holding)+\
+              "\n    Average Cost: ${:.2f}".format(self.__averageCost)+\
+              "\n    Shares after trade: "+str(self.__heldShares)+'\n'
+        
+        sell = self.__date + " " + self.__description+\
+    " for: $"+self.__total+\
+    "\n    Shares after trade: "+str(self.__heldShares)+\
+    "     Profit: ${:.2f}".format(self.__profit)+'\n'
+        
+        if self.__type == "Buy": return buy
+        else: return sell
 
 # A holding object is like a trade object.  There is one for each stock you have.
 '''
@@ -90,6 +122,7 @@ TD Holdings file
 AAPL, +5, 109.03, 122.36, $611.80, +3.31, ,+11.76%,$64.15,$64.39,$16.55,$428.26
 
 '''
+
 class Holding():
     def __init__(self, hList):
         self.__ticker = hList[0]
@@ -111,6 +144,7 @@ class Holding():
 
     def getPrice(self):
         return self.__price
+    
     def getMark(self):
         return self.__mark
 

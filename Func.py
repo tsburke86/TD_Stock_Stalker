@@ -42,10 +42,10 @@ def printStats(port):
     print("Total Invested: ${:.2f}".format(port.getTotalInvested()))
 
 def lineBreak():
-    print("\n---------------------------------------------------|\n")
+    print("|---------------------------------------------------|\n")
 
 def shortBreak():
-    print("\n---------------\n")
+    print("---------------\n")
     
 #########################
 
@@ -96,6 +96,18 @@ def makeHoldingDict(file):
     return holdingDict
 
 ##################
+
+# Print the Blocks nicely
+def printBlocks(port, ticker):
+    counter = 1
+    for i in port.getStock(ticker).getBlocks(): # i is the block
+        print('--| Block #'+str(counter)+"  "+i.getDates()+' |--')
+        #print('Profit: ${:.2f}'.format(i.getProfit()))
+        print('Block Profit: ${:.2f}'.format(i.getBlockProfit())+'\n')
+        i.printTrades()
+        shortBreak()
+        counter += 1
+
 
 # Print all trades for a stock
 def printTrades(port, ticker):
