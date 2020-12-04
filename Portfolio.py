@@ -1,4 +1,4 @@
-from Stock_Block import *
+from Stock import *
 
 # Function to sort the profit list
 def getProfit(stock):

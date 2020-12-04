@@ -1,5 +1,4 @@
 from Func import *
-#from Stock import *
 from Portfolio import *
 from Trade import *
 
@@ -45,6 +44,10 @@ def main():
         elif entry == '4': printInvested(port)
         else: print("Bad Entry")
         lineBreak()
+        cont = input("PRESS ENTER TO CONTINUE")
+        cont = None
+        print()
+        print()
     print()
     print("Until Next Time...")
     print()

@@ -1,4 +1,5 @@
 from Func import *
+from Block import *
 
 '''
 The Stock Object is a list containing all the trade objects for that ticker.
@@ -24,6 +25,9 @@ class Stock():
         self.__heldProfit = 0        # Profit from shares currently held
         self.__securedProfit = 0     # Profit secured by selling shares
         self.setHolding(hDict)
+
+        # Block Stuff
+        self.__blockList = []
         
     def __str__(self):
         long = " "+self.__ticker+"\tDate Range: "+self.getDates()\
@@ -78,6 +82,17 @@ class Stock():
         else: last = "present"
         return start+" - "+last
 
+    # Blocks
+    def getBlock(self, i):
+        return self.__blockList[i]
+    
+    def getBlocks(self):
+        return self.__blockList
+
+    def getBlockListLength(self):
+        return len(self.__blockList)
+    
+
     # Setters
 
     def setHolding(self,hDict):
@@ -122,6 +137,55 @@ class Stock():
             self.__investedPercent = self.getInvested() / ti * 100
         if self.__mark != 0:
             self.__percentChg = self.__AVC / self.__mark
+
+    def setBlocks(self):
+        buys = 0
+        sells = 0
+        shares = 0
+        # avcShares is for generating the average cost for the block
+        avcShares = 0
+
+        blockProfit = 0 # For the entire block
+        
+        for i in range(len(self.__tradeList)):
+            profit = 0 # For each trade, reset each time
+
+            if shares == 0:
+                block = Block()
+                self.__blockList.append(block)
+                blockProfit = 0
+                buys = 0
+                sells = 0
+                shares = 0
+                avcShares = 0
+            
+            trade = self.__tradeList[i]
+            if trade.getType() == 'Buy':
+                buys += abs(trade.getTotal())
+                shares += trade.getQuantity()
+                avcShares += trade.getQuantity()
+                avc = buys / avcShares
+                trade.setAVC(avc)
+            else:
+                trade.setAVC(avc)
+                sells += trade.getTotal()
+                shares -= trade.getQuantity()
+                profit = trade.getTotal() - \
+                         trade.getAVC() * trade.getQuantity()
+                blockProfit += profit
+                
+                
+            if shares == 0: holding = 0
+            else: holding = buys - sells
+            
+            trade.setHeldShares(shares)
+            trade.setHolding(holding)
+            trade.setAVC(avc)
+            trade.setProfit(profit)
+            block.append(trade)
+            block.setStats(buys,sells,shares,avcShares,blockProfit)
+        
+            
 
     def appendTrade(self, trade):
         self.__tradeList.append(trade)
